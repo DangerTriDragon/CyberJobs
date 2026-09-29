@@ -1,0 +1,56 @@
+name: Refresh Jobs
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # 06:00 UTC daily
+  workflow_dispatch:        # manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch jobs
+        run: python fetch_jobs.py
+
+      - name: Write meta.json
+        run: |
+          python - <<'EOF'
+          import json, datetime, pathlib
+          pathlib.Path("data").mkdir(exist_ok=True)
+          pathlib.Path("data/meta.json").write_text(
+              json.dumps({
+                  "lastRefreshed": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                  "source": "github-actions"
+              }, indent=2)
+          )
+          EOF
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/jobs.json data/meta.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: refresh jobs [skip ci]"
+            git push
+          else
+            echo "No new jobs found, nothing to commit."
+          fi
