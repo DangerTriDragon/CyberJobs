@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cyberjobs://in — Cybersecurity Job Alerts, India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0b0d10; --panel:#14171c; --panel2:#181c22; --line:#262b32; --line2:#2f353d;
+  --text:#eceef1; --muted:#8c95a1; --dim:#5d6570;
+  --amber:#ffb238; --amber-dim:#4a3a1c;
+  --green:#35d18a; --green-dim:#173328;
+  --sky:#7cc0ff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ink);color:var(--text);font:15px/1.55 Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.brand{font-family:"Space Grotesk",Inter,sans-serif}
+.mono{font-family:"IBM Plex Mono",monospace}
+a{color:inherit}
+
+header{position:sticky;top:0;z-index:20;background:rgba(11,13,16,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{max-width:1320px;margin:auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-size:17px;font-weight:600;letter-spacing:.01em;display:flex;align-items:center;gap:8px}
+.brand .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber)}
+.nav .status{font-size:11px;color:var(--dim)}
+.nav .status b{color:var(--green);font-weight:500}
+
+.hero{max-width:1320px;margin:auto;padding:52px 22px 26px}
+.hero h1{font-size:clamp(28px,4.4vw,46px);line-height:1.08;margin:0 0 14px;font-weight:600;max-width:14ch}
+.hero p{max-width:62ch;color:var(--muted);font-size:16px}
+.hero p a{color:var(--amber);text-decoration:none;border-bottom:1px solid var(--amber-dim)}
+
+.searchbar{display:grid;grid-template-columns:1fr 160px 160px auto;gap:8px;margin-top:26px}
+.searchbar input,.searchbar select{border:1px solid var(--line2);border-radius:6px;padding:12px 13px;background:var(--panel);color:var(--text);outline:none;font:14px Inter,sans-serif}
+.searchbar input::placeholder{color:var(--dim)}
+.searchbar input{font-family:"IBM Plex Mono",monospace;font-size:13px}
+.searchbar input:focus,.searchbar select:focus{border-color:var(--amber)}
+.searchbar button{border:1px solid var(--line2);border-radius:6px;background:transparent;color:var(--muted);font:13px Inter,sans-serif;cursor:pointer}
+.searchbar button:hover{color:var(--text);border-color:var(--sky)}
+
+.wrap{max-width:1320px;margin:auto;padding:0 22px 60px}
+
+.ticker{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:22px 0 26px;background:var(--panel)}
+.ticker div{flex:1;padding:14px 18px;border-right:1px solid var(--line)}
+.ticker div:last-child{border-right:none}
+.ticker b{display:block;font-family:"IBM Plex Mono",monospace;font-size:22px;color:var(--amber);font-weight:500}
+.ticker span{color:var(--dim);font-size:11.5px}
+
+.layout{display:grid;grid-template-columns:230px 1fr;gap:20px}
+.sidebar{position:sticky;top:74px;height:max-content}
+.sidebar .block{border:1px solid var(--line);border-radius:8px;padding:15px;background:var(--panel);margin-bottom:14px}
+.sidebar h3{margin:0 0 10px;font-size:12px;color:var(--dim);font-weight:500;text-transform:none}
+.filter{display:flex;align-items:center;gap:9px;padding:7px 0;color:#c6ccd4;font-size:13.5px;cursor:pointer}
+.filter input{accent-color:var(--amber)}
+.filter .cnt{margin-left:auto;color:var(--dim);font-size:11px}
+.sidebar .browse{display:block;padding:6px 0;font-size:12.5px;color:var(--sky);text-decoration:none;border-bottom:1px dashed transparent}
+.sidebar .browse:hover{border-color:var(--sky)}
+
+.section-head{display:flex;justify-content:space-between;align-items:baseline;margin:6px 0 14px;gap:12px;flex-wrap:wrap}
+.section-head h2{margin:0;font-size:19px;font-weight:600}
+.section-head .n{color:var(--dim);font-size:12px;font-family:"IBM Plex Mono",monospace}
+
+.jobs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.job{border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:4px;background:var(--panel);padding:15px 16px;transition:border-color .12s}
+.job:hover{border-color:var(--line2);border-left-color:var(--amber)}
+.job.intern{border-left-color:var(--green)}
+.jobtop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.job h3{margin:0 0 3px;font-size:15.5px;font-weight:600}
+.job .company{color:var(--muted);font-size:13px}
+.catpill{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--amber);background:var(--amber-dim);padding:3px 7px;border-radius:3px;white-space:nowrap}
+.job.intern .catpill{color:var(--green);background:var(--green-dim)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:11px 0}
+.chip{font-size:11px;font-family:"IBM Plex Mono",monospace;border:1px solid var(--line2);padding:3px 7px;border-radius:3px;color:#aab2bc}
+.jobfoot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:10px;border-top:1px solid var(--line)}
+.jobfoot .src{color:var(--dim);font-size:11px;font-family:"IBM Plex Mono",monospace}
+.jobfoot a{color:var(--amber);text-decoration:none;font-size:13px;font-weight:500}
+.jobfoot a:hover{text-decoration:underline}
+.empty{padding:40px;text-align:center;color:var(--muted);grid-column:1/-1;border:1px dashed var(--line);border-radius:8px}
+
+.boardlinks{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 30px}
+.boardlinks a{font-size:12px;font-family:"IBM Plex Mono",monospace;border:1px solid var(--line);padding:8px 11px;border-radius:5px;color:#c6ccd4;text-decoration:none;background:var(--panel)}
+.boardlinks a:hover{border-color:var(--sky);color:var(--sky)}
+
+.notice{margin:0 0 34px;padding:16px 18px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--sky);border-radius:6px;color:#b7bfc9;font-size:13.5px}
+.notice b{color:var(--text)}
+
+.tier{margin-top:26px}
+.tier h4{font-size:12px;color:var(--dim);font-weight:500;margin:0 0 8px;font-family:"IBM Plex Mono",monospace}
+.complist{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.comprow{display:grid;grid-template-columns:1fr 2fr 26px;gap:14px;padding:10px 14px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;align-items:center}
+.complist a.comprow:last-child{border-bottom:none}
+.comprow:hover{background:var(--panel2)}
+.comprow b{font-size:13.5px;font-weight:600}
+.comprow span{color:var(--dim);font-size:12px}
+.comprow .go{color:var(--dim);font-size:14px;text-align:right}
+.comprow:hover .go{color:var(--amber)}
+
+.companysearch{margin:20px 0 8px;max-width:340px}
+.companysearch input{width:100%;border:1px solid var(--line2);border-radius:6px;padding:10px 12px;background:var(--panel);color:var(--text);font:13px "IBM Plex Mono",monospace;outline:none}
+.companysearch input:focus{border-color:var(--amber)}
+
+footer{max-width:1320px;margin:auto;padding:26px 22px 55px;color:var(--dim);font-size:12px;border-top:1px solid var(--line);margin-top:20px}
+
+@media(max-width:950px){.layout{grid-template-columns:1fr}.sidebar{position:static}.jobs{grid-template-columns:1fr}.searchbar{grid-template-columns:1fr 1fr}.searchbar input{grid-column:1/-1}.ticker{flex-wrap:wrap}.ticker div{flex:1 1 50%;border-bottom:1px solid var(--line)}}
+@media(max-width:560px){.searchbar{grid-template-columns:1fr}.comprow{grid-template-columns:1fr 22px}.comprow span{display:none}}
+</style>
+</head>
+<body>
+<header><div class="nav">
+  <div class="brand"><span class="dot"></span>cyberjobs<span class="mono" style="color:var(--dim)">://in</span></div>
+  <div class="status mono">last refreshed <b id="lastRefreshed">…</b></div>
+</div></header>
+
+<section class="hero">
+  <h1>Every cybersecurity opening in India, organized in one place.</h1>
+  <p>SOC, VAPT, DFIR, cloud security, GRC, IAM, AppSec, threat intel, malware analysis, internships. Every listing links to the original posting or the live search page it came from — nothing here is scraped from behind a login. Static pages can't stay live on their own; <a href="#refresh">see the note below</a> on what "always updating" actually takes.</p>
+  <div class="searchbar">
+    <input id="search" placeholder="search role, skill, company, tool...">
+    <select id="location"><option value="">All locations</option><option>Bengaluru</option><option>Hyderabad</option><option>Pune</option><option>Mumbai</option><option>Delhi / NCR</option><option>Ahmedabad</option><option>Chennai</option><option>Kochi</option><option>Pan India</option><option>Remote</option></select>
+    <select id="experience"><option value="">All experience</option><option>Internship</option><option>0–2 years</option><option>2–5 years</option><option>5+ years</option></select>
+    <button onclick="resetFilters()">Reset filters</button>
+  </div>
+</section>
+
+<main class="wrap">
+  <div class="ticker mono">
+    <div><b id="jobCount">0</b><span>listings shown</span></div>
+    <div><b id="boardCount">0</b><span>live board links</span></div>
+    <div><b id="internCount">0</b><span>internships</span></div>
+    <div><b id="companyCount">197</b><span>companies tracked</span></div>
+    <div><b>12</b><span>role categories</span></div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="block">
+        <h3>Role category</h3>
+        <label class="filter"><input type="checkbox" value="SOC" class="cat"> SOC / Blue Team<span class="cnt mono"></span></label>
+        <label class="filter"><input type="checkbox" value="VAPT" class="cat"> VAPT / Red Team<span class="cnt mono"></span></label>
+        <label class="filter"><input type="checkbox" value="DFIR" class="cat"> DFIR<span class="cnt mono"></span></label>
+        <label class="filter"><input type="checkbox" value="Cloud Security" class="cat"> Cloud Security<span class="cnt mono"></span></label>
+        <label class="filter"><input type="checkbox" value="AppSec" class="cat"> AppSec<span class="cnt mono"></span></label>
+        <label class="filter"><input type="checkbox" value="IAM" class="cat"> IAM / PAM<span class="cnt mono"></span></label>
+        <label class="filter"><input type="checkbox" value="GRC" class="cat"> GRC / Risk<span class="cnt mono"></span></label>
+        <label class="filter"><input type="checkbox" value="Threat" class="cat"> Threat Intel / Hunting<span class="cnt mono"></span></label>
+        <label class="filter"><input type="checkbox" value="Engineering" class="cat"> Security Engineering<span class="cnt mono"></span></label>
+        <label class="filter"><input type="checkbox" value="Architecture" class="cat"> Security Architecture<span class="cnt mono"></span></label>
+        <label class="filter"><input type="checkbox" value="Malware" class="cat"> Malware / Reverse Eng.<span class="cnt mono"></span></label>
+        <label class="filter"><input type="checkbox" value="Privacy" class="cat"> Privacy / Compliance<span class="cnt mono"></span></label>
+      </div>
+      <div class="block">
+        <h3>Live category search</h3>
+        <a class="browse" href="https://in.linkedin.com/jobs/soc-analyst-jobs" target="_blank" rel="noopener">SOC — LinkedIn ↗</a>
+        <a class="browse" href="https://in.linkedin.com/jobs/penetration-testing-jobs" target="_blank" rel="noopener">VAPT — LinkedIn ↗</a>
+        <a class="browse" href="https://www.glassdoor.co.in/Job/digital-forensics-and-incident-response-dfir-jobs-SRCH_KO0,44.htm" target="_blank" rel="noopener">DFIR — Glassdoor ↗</a>
+        <a class="browse" href="https://in.linkedin.com/jobs/governance-risk-compliance-grc-jobs" target="_blank" rel="noopener">GRC — LinkedIn ↗</a>
+        <a class="browse" href="https://www.glassdoor.com/Job/india-threat-intelligence-jobs-SRCH_IL.0,5_IN115_KO6,25.htm" target="_blank" rel="noopener">Threat intel — Glassdoor ↗</a>
+        <a class="browse" href="https://internshala.com/internships/cyber-security-internship" target="_blank" rel="noopener">Internships — Internshala ↗</a>
+      </div>
+    </aside>
+
+    <section>
+      <div class="section-head"><h2>Latest opportunities</h2><span class="n">sourced individually · Sep 2026</span></div>
+      <div id="catmore" class="boardlinks" style="display:none;margin:0 0 14px"></div>
+      <div id="jobs" class="jobs"></div>
+      <div id="fallback-boards"></div>
+
+      <div class="section-head" style="margin-top:26px"><h2 style="font-size:16px">Browse the full live boards</h2></div>
+      <div class="boardlinks">
+        <a href="https://in.linkedin.com/jobs/cybersecurity/india" target="_blank" rel="noopener">LinkedIn: all cybersecurity (India) ↗</a>
+        <a href="https://www.foundit.in/search/soc-analyst-jobs" target="_blank" rel="noopener">foundit.in: SOC Analyst ↗</a>
+        <a href="https://in.linkedin.com/jobs/vapt-jobs" target="_blank" rel="noopener">LinkedIn: VAPT ↗</a>
+        <a href="https://in.linkedin.com/jobs/grc-jobs" target="_blank" rel="noopener">LinkedIn: GRC ↗</a>
+        <a href="https://in.indeed.com/q-grc-security-services-jobs.html" target="_blank" rel="noopener">Indeed: GRC security ↗</a>
+        <a href="https://www.glassdoor.co.in/Job/india-soc-analyst-jobs-SRCH_IL.0,5_IN115_KO6,17.htm" target="_blank" rel="noopener">Glassdoor: SOC Analyst ↗</a>
+        <a href="https://wellfound.com/role/l/cybersecurity/india" target="_blank" rel="noopener">Wellfound: cybersecurity startups ↗</a>
+        <a href="https://internshala.com/internships/cyber-security-internship" target="_blank" rel="noopener">Internshala: internships ↗</a>
+      </div>
+
+      <div class="notice" id="refresh">
+        <b>On "keeps updating":</b> this file is static — it can't poll LinkedIn or Naukri on its own, and building something that could would mean bypassing the CORS/anti-bot controls those sites put up on purpose, which I won't do. What actually keeps a board like this current is a small backend job polling each employer's public careers API or RSS feed on a schedule and writing the results to a database this page reads from — most large employers here (TCS, Wipro, Accenture, Deloitte) expose one. Until that's built, the practical version of "always updating" is: come back and ask me to refresh this page whenever you want the latest postings, and I'll re-pull it. I'm also happy to scope out that backend with you if you want the real thing.
+      </div>
+
+      <div class="section-head"><h2>Companies to monitor</h2><span class="n" id="compNote">grouped by tier</span></div>
+      <div class="companysearch"><input id="compSearch" placeholder="filter companies..." class="mono"></div>
+      <div id="companies"></div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  Sources: official career pages (careers.wipro.com, accenture.com/careers, tcs.com/careers, southasiacareers.deloitte.com, cloudsek.com/openings, and each listed company's own site) plus live, permitted search pages on LinkedIn Jobs, Glassdoor, foundit.in, Indeed, Wellfound and Internshala. Always apply through the original posting. This page never scrapes credentials, bypasses CAPTCHAs, or evades access controls.
+</footer>
+
+<script>
+window.jobs = [];
+document.getElementById('jobs').innerHTML = '<div class="empty">Loading jobs\u2026</div>';
+
+const companies = [
+["TCS","IT Services Majors","SOC, VAPT, cloud, IAM, GRC, threat hunting","https://www.tcs.com/careers/india/tcs-cybersecurity-hiring"],
+["Wipro","IT Services Majors","SOC, EDR, cloud, architecture, VAPT","https://careers.wipro.com/"],
+["Infosys","IT Services Majors","SOC/SIEM, security engineering, zero trust","https://www.infosys.com/careers.html"],
+["HCLTech","IT Services Majors","Threat intel, governance, managed detection","https://www.hcltech.com/careers"],
+["Tech Mahindra","IT Services Majors","SOC, network security, VAPT","https://careers.techmahindra.com/"],
+["Cognizant","IT Services Majors","SOC, IAM, cloud, security engineering","https://careers.cognizant.com/"],
+["Capgemini","IT Services Majors","SOC, SIEM, cloud, GRC","https://www.capgemini.com/careers/"],
+["LTIMindtree","IT Services Majors","Security engineering, cloud, SOC","https://www.ltimindtree.com/careers/"],
+["Mphasis","IT Services Majors","Cloud security, IAM, security engineering","https://careers.mphasis.com/"],
+["Hexaware Technologies","IT Services Majors","Security engineering, cloud, GRC","https://hexaware.com/careers/"],
+["Persistent Systems","IT Services Majors","AppSec, cloud, security engineering","https://www.persistent.com/careers/"],
+["Coforge","IT Services Majors","SOC, GRC, security engineering","https://www.coforge.com/careers"],
+["Birlasoft","IT Services Majors","Cybersecurity engineering","https://www.birlasoft.com/careers"],
+["Cyient","IT Services Majors","OT/ICS security, engineering","https://www.cyient.com/careers"],
+["Zensar Technologies","IT Services Majors","Security engineering, cloud","https://www.zensar.com/careers"],
+["Happiest Minds","IT Services Majors","Security services, cloud, GRC","https://www.happiestminds.com/careers/"],
+["Sonata Software","IT Services Majors","Cloud security, security engineering","https://www.sonata-software.com/careers"],
+["L&T Technology Services","IT Services Majors","OT/ICS, product security","https://www.ltts.com/careers"],
+["Mastek","IT Services Majors","Cloud security, GRC","https://www.mastek.com/careers/"],
+["Newgen Software","IT Services Majors","AppSec, product security","https://newgensoft.com/careers/"],
+["Tata Elxsi","IT Services Majors","Product & embedded security","https://www.tataelxsi.com/careers"],
+["eClerx","IT Services Majors","Security operations, risk","https://www.eclerx.com/careers.html"],
+["WNS Global Services","IT Services Majors","GRC, security operations","https://www.wns.com/careers"],
+["Genpact","IT Services Majors","SOC, security analysis","https://www.genpact.com/careers"],
+["Deloitte","Big 4 & Consulting","Cyber risk, DFIR, threat intel, GRC","https://southasiacareers.deloitte.com/"],
+["PwC India","Big 4 & Consulting","GRC, cyber risk, cloud security","https://www.pwc.in/careers.html"],
+["EY","Big 4 & Consulting","GRC, cyber risk, consulting","https://www.ey.com/en_in/careers"],
+["KPMG India","Big 4 & Consulting","GRC, cyber risk, consulting","https://home.kpmg/in/en/home/careers.html"],
+["Accenture","Big 4 & Consulting","Security consulting, cloud, architecture","https://www.accenture.com/in-en/careers"],
+["Protiviti India","Big 4 & Consulting","Risk & security consulting","https://www.protiviti.com/in-en/careers"],
+["Grant Thornton Bharat","Big 4 & Consulting","Cyber risk, GRC","https://www.grantthornton.in/careers/"],
+["BDO India","Big 4 & Consulting","Cyber risk, compliance","https://www.bdo.in/en-gb/careers"],
+["Microsoft India","Global Product & Vendors","Security engineering, cloud, identity","https://careers.microsoft.com/"],
+["Google India","Global Product & Vendors","Cloud security, detection engineering","https://www.google.com/about/careers/applications/"],
+["Amazon / AWS India","Global Product & Vendors","Cloud security, IAM, detection","https://www.amazon.jobs/"],
+["IBM India","Global Product & Vendors","Security engineering, threat detection","https://www.ibm.com/in-en/careers"],
+["Cisco India","Global Product & Vendors","Network security, cloud","https://jobs.cisco.com/"],
+["Palo Alto Networks","Global Product & Vendors","Network, cloud, SASE, identity","https://jobs.paloaltonetworks.com/"],
+["CrowdStrike","Global Product & Vendors","EDR, threat detection","https://www.crowdstrike.com/careers/"],
+["Fortinet","Global Product & Vendors","Network security, SASE","https://www.fortinet.com/corporate/careers"],
+["Check Point Software","Global Product & Vendors","Network & cloud security","https://careers.checkpoint.com/"],
+["SAP Labs India","Global Product & Vendors","Product & application security","https://jobs.sap.com/"],
+["Oracle India","Global Product & Vendors","Cloud security, IAM","https://www.oracle.com/in/careers/"],
+["Salesforce India","Global Product & Vendors","Product security, trust","https://www.salesforce.com/company/careers/"],
+["VMware / Broadcom","Global Product & Vendors","Virtualization & cloud security","https://careers.broadcom.com/"],
+["Dell Technologies","Global Product & Vendors","Product security, engineering","https://jobs.dell.com/"],
+["HPE India","Global Product & Vendors","Infrastructure security","https://careers.hpe.com/"],
+["Juniper Networks","Global Product & Vendors","Network security","https://careers.juniper.net/"],
+["F5 Networks","Global Product & Vendors","AppSec, API security","https://www.f5.com/company/careers"],
+["Zscaler","Global Product & Vendors","Zero trust, cloud security","https://www.zscaler.com/careers"],
+["Rapid7","Global Product & Vendors","Vulnerability mgmt, detection","https://www.rapid7.com/careers/"],
+["Tenable","Global Product & Vendors","Vulnerability management","https://www.tenable.com/careers"],
+["Qualys","Global Product & Vendors","Vulnerability & compliance","https://www.qualys.com/careers/"],
+["Akamai Technologies","Global Product & Vendors","Network & app security","https://www.akamai.com/careers"],
+["Cloudflare","Global Product & Vendors","Network & app security","https://www.cloudflare.com/careers/"],
+["Okta","Global Product & Vendors","Identity & access management","https://www.okta.com/company/careers/"],
+["CyberArk","Global Product & Vendors","Privileged access management","https://www.cyberark.com/careers/"],
+["SentinelOne","Global Product & Vendors","EDR, threat detection","https://www.sentinelone.com/careers/"],
+["Trend Micro","Global Product & Vendors","Endpoint & cloud security","https://www.trendmicro.com/en_in/about/careers.html"],
+["Barracuda Networks","Global Product & Vendors","Email & network security","https://www.barracuda.com/company/careers"],
+["Sophos","Global Product & Vendors","Endpoint & network security","https://www.sophos.com/en-us/company/careers"],
+["Netskope","Global Product & Vendors","SASE, cloud security","https://www.netskope.com/company/careers"],
+["Proofpoint","Global Product & Vendors","Email security, threat intel","https://www.proofpoint.com/us/company/careers"],
+["Splunk","Global Product & Vendors","SIEM, security analytics","https://www.splunk.com/en_us/careers.html"],
+["Elastic","Global Product & Vendors","Security analytics, SIEM","https://www.elastic.co/about/careers"],
+["ServiceNow India","Global Product & Vendors","GRC, security operations tooling","https://careers.servicenow.com/"],
+["Adobe India","Global Product & Vendors","Product & application security","https://www.adobe.com/careers.html"],
+["HDFC Bank","BFSI & Internet","Cyber risk, SOC, fraud & security","https://www.hdfcbank.com/personal/about-us/careers"],
+["ICICI Bank","BFSI & Internet","Cyber security, fraud risk","https://www.icicibank.com/careers"],
+["Axis Bank","BFSI & Internet","Cyber security, GRC","https://www.axisbank.com/careers"],
+["Kotak Mahindra Bank","BFSI & Internet","Cyber security, risk","https://www.kotak.com/en/careers.html"],
+["State Bank of India","BFSI & Internet","Cyber security, SOC","https://bank.sbi/careers"],
+["Paytm","BFSI & Internet","AppSec, fraud, cloud security","https://paytm.com/careers"],
+["PhonePe","BFSI & Internet","AppSec, fraud, security engineering","https://www.phonepe.com/careers/"],
+["Razorpay","BFSI & Internet","AppSec, fraud, security engineering","https://razorpay.com/jobs/"],
+["CRED","BFSI & Internet","AppSec, security engineering","https://careers.cred.club/"],
+["Flipkart","BFSI & Internet","Security engineering, SOC","https://www.flipkartcareers.com/"],
+["Myntra","BFSI & Internet","AppSec, security engineering","https://careers.myntra.com/"],
+["Swiggy","BFSI & Internet","AppSec, security engineering","https://careers.swiggy.com/"],
+["Zomato","BFSI & Internet","AppSec, security engineering","https://www.zomato.com/careers"],
+["Ola","BFSI & Internet","Security engineering","https://www.olacabs.com/careers"],
+["Reliance Jio","BFSI & Internet","Network & telecom security","https://www.jio.com/careers"],
+["Bharti Airtel","BFSI & Internet","Network & telecom security","https://www.airtel.in/careers"],
+["CloudSEK","Cybersecurity-Focused India","Digital risk, threat intel, GRC","https://www.cloudsek.com/openings"],
+["Sequretek","Cybersecurity-Focused India","SOC-as-a-service, IAM, GRC","https://www.sequretek.com/careers"],
+["Kratikal Tech","Cybersecurity-Focused India","VAPT, phishing simulation, threat intel","https://kratikal.com/career.html"],
+["TAC Security","Cybersecurity-Focused India","Vulnerability & risk management","https://www.tacsecurity.com/company/careers/"],
+["SISA Information Security","Cybersecurity-Focused India","SOC, PCI DSS, security testing","https://www.sisainfosec.com/careers/"],
+["Safe Security","Cybersecurity-Focused India","Cyber risk quantification","https://www.safe.security/company/careers"],
+["Certcube Labs","Cybersecurity-Focused India","VAPT, training","https://certcube.com/careers/"],
+["Astra Security","Cybersecurity-Focused India","VAPT, continuous pentesting","https://www.getastra.com/careers"],
+["Qualysec","Cybersecurity-Focused India","VAPT","https://qualysec.com/careers/"],
+["SecureLayer7","Cybersecurity-Focused India","AppSec, API security testing","https://securelayer7.net/careers/"],
+["CyberNX","Cybersecurity-Focused India","MSSP, SOC, incident response","https://www.cybernx.com/careers"],
+["Eventus Security","Cybersecurity-Focused India","MSSP, SOC, threat intel","https://eventussecurity.com/careers/"],
+["InstaSafe","Cybersecurity-Focused India","Zero trust network access","https://instasafe.com/careers/"],
+["WiJungle","Cybersecurity-Focused India","Unified network security","https://wijungle.com/careers/"],
+["FireCompass","Cybersecurity-Focused India","Attack surface management","https://www.firecompass.com/careers/"],
+["Seclore","Cybersecurity-Focused India","Data-centric security","https://www.seclore.com/careers/"],
+["Druva","Cybersecurity-Focused India","Data & cyber resilience","https://www.druva.com/careers"],
+["IDfy","Cybersecurity-Focused India","Identity verification, fraud","https://www.idfy.com/careers/"],
+["Mantra Softech","Cybersecurity-Focused India","Biometric & identity security","https://www.mantratec.com/careers"],
+["HyperVerge","Cybersecurity-Focused India","AI identity verification","https://hyperverge.co/careers/"],
+["Innefu Labs","Cybersecurity-Focused India","AI-driven security, threat intel","https://www.innefu.com/career"],
+["Indusface","Cybersecurity-Focused India","WAF, AppSec (AppTrana)","https://www.indusface.com/careers/"],
+["Data Resolve Technologies","Cybersecurity-Focused India","Insider threat, DLP","https://www.dataresolve.com/careers"],
+["ClearTrail Technologies","Cybersecurity-Focused India","Communication intelligence","https://www.cleartrail.com/careers/"],
+["Network Intelligence","Cybersecurity-Focused India","MSSP, SOC, compliance","https://www.networkintelligence.ai/careers/"],
+["K7 Computing","Cybersecurity-Focused India","Endpoint security, threat research","https://www.k7computing.com/us/careers"],
+["Quick Heal / Seqrite","Cybersecurity-Focused India","Endpoint security, threat research","https://www.quickheal.co.in/careers"],
+["Aujas Cybersecurity","Cybersecurity-Focused India","Managed security, consulting","https://www.aujas.com/careers/"],
+["Payatu","Cybersecurity-Focused India","Security research, VAPT, training","https://payatu.com/careers/"],
+["Valency Networks","Cybersecurity-Focused India","VAPT, security auditing","https://valencynetworks.com/careers.html"],
+["Vehere","Cybersecurity-Focused India","Network detection & response","https://www.vehere.com/careers"],
+["63SATS Cybertech","Cybersecurity-Focused India","Threat intel, managed security","https://www.63sats.com/careers"],
+["Bureau","Cybersecurity-Focused India","Fraud & identity security","https://www.bureau.id/careers"],
+["Signzy","Cybersecurity-Focused India","Identity verification, fraud","https://www.signzy.com/careers/"],
+["Cyble","Cybersecurity-Focused India","Threat intelligence","https://cyble.com/careers/"],
+["BreachLock","Cybersecurity-Focused India","VAPT, offensive security","https://www.breachlock.com/careers/"],
+["Nexavise Consulting","Cybersecurity-Focused India","Fresher SOC/VAPT training & hiring","https://in.linkedin.com/company/nexavise"],
+["Virtusa","IT Services Majors","Security engineering, cloud, GRC","https://www.virtusa.com/careers"],
+["Infosys BPM","IT Services Majors","Security operations, risk","https://www.infosysbpm.com/careers.html"],
+["Mindtree (LTIMindtree)","IT Services Majors","Cloud security, SOC","https://www.ltimindtree.com/careers/"],
+["NTT DATA India","IT Services Majors","Managed security, SOC, network","https://careers.nttdata.com/"],
+["Atos / Eviden India","IT Services Majors","MDR, SOC, cloud security","https://atos.net/en/careers"],
+["DXC Technology India","IT Services Majors","Managed security, cloud, GRC","https://dxc.com/us/en/careers"],
+["Nagarro","IT Services Majors","AppSec, DevSecOps","https://www.nagarro.com/en/careers"],
+["Quest Global","IT Services Majors","Product & embedded security","https://www.quest-global.com/careers/"],
+["Sasken Technologies","IT Services Majors","Embedded & product security","https://www.sasken.com/careers"],
+["KPIT Technologies","IT Services Majors","Automotive & OT security","https://www.kpit.com/careers/"],
+["Xoriant","IT Services Majors","AppSec, cloud security","https://www.xoriant.com/careers"],
+["Tavant","IT Services Majors","AppSec, cloud security","https://www.tavant.com/careers"],
+["Iris Software","IT Services Majors","Security engineering, BFSI","https://www.irissoftware.com/careers/"],
+["Alvarez & Marsal India","Big 4 & Consulting","Cyber risk, forensic advisory","https://www.alvarezandmarsal.com/careers"],
+["Control Risks India","Big 4 & Consulting","Cyber risk, investigations","https://www.controlrisks.com/careers"],
+["Kroll India","Big 4 & Consulting","Cyber risk, DFIR, investigations","https://www.kroll.com/en/careers"],
+["Nangia Andersen India","Big 4 & Consulting","Risk advisory, compliance","https://nangia-andersen.com/careers/"],
+["MazarsIndia / Forvis Mazars","Big 4 & Consulting","IT audit, cyber risk","https://www.forvismazars.com/in/en/careers"],
+["Micro Focus / OpenText India","Global Product & Vendors","Security analytics, data protection","https://careers.opentext.com/"],
+["Thales India","Global Product & Vendors","Data protection, HSM, encryption","https://www.thalesgroup.com/en/career"],
+["Imperva (Thales)","Global Product & Vendors","WAF, data security","https://www.imperva.com/company/careers/"],
+["Varonis","Global Product & Vendors","Data security, insider threat","https://www.varonis.com/careers"],
+["Forcepoint","Global Product & Vendors","DLP, SASE, insider threat","https://www.forcepoint.com/company/careers"],
+["Arctic Wolf","Global Product & Vendors","MDR, security operations","https://arcticwolf.com/careers/"],
+["Trellix","Global Product & Vendors","XDR, endpoint security","https://www.trellix.com/about/careers/"],
+["Skyhigh Security","Global Product & Vendors","SSE, cloud security","https://www.skyhighsecurity.com/company/careers.html"],
+["Commvault India","Global Product & Vendors","Cyber resilience, data protection","https://www.commvault.com/careers"],
+["Veritas / Cohesity","Global Product & Vendors","Data protection, cyber resilience","https://www.cohesity.com/company/careers/"],
+["Nutanix India","Global Product & Vendors","Infrastructure & cloud security","https://www.nutanix.com/company/careers"],
+["Arista Networks India","Global Product & Vendors","Network security, NDR","https://www.arista.com/en/careers"],
+["Extreme Networks India","Global Product & Vendors","Network security","https://www.extremenetworks.com/about-us/careers"],
+["Infoblox India","Global Product & Vendors","DNS security, network","https://www.infoblox.com/company/careers/"],
+["Gen Digital (Norton/Avast)","Global Product & Vendors","Consumer security, threat research","https://www.gendigital.com/us/en/careers/"],
+["McAfee India","Global Product & Vendors","Consumer & endpoint security","https://careers.mcafee.com/"],
+["Synopsys India","Global Product & Vendors","AppSec testing, software integrity","https://www.synopsys.com/careers.html"],
+["Black Duck Software","Global Product & Vendors","SCA, application security","https://www.blackduck.com/company/careers.html"],
+["Veracode","Global Product & Vendors","AppSec testing platform","https://www.veracode.com/about/careers/"],
+["Snyk India","Global Product & Vendors","Developer security, SCA","https://snyk.io/careers/"],
+["JPMorgan Chase India","BFSI & Internet","Cyber security, SOC, GRC","https://careers.jpmorgan.com/"],
+["Goldman Sachs India","BFSI & Internet","Security engineering, risk","https://www.goldmansachs.com/careers/"],
+["Morgan Stanley India","BFSI & Internet","Cyber security, SOC","https://www.morganstanley.com/careers"],
+["Wells Fargo India","BFSI & Internet","Cyber security, IAM, GRC","https://www.wellsfargojobs.com/"],
+["Barclays India","BFSI & Internet","Cyber security, threat detection","https://home.barclays/careers/"],
+["HSBC India","BFSI & Internet","Cyber security, GRC","https://www.hsbc.com/careers"],
+["Standard Chartered GBS","BFSI & Internet","Cyber security, SOC, IAM","https://www.sc.com/en/careers/"],
+["Deutsche Bank India","BFSI & Internet","Cyber security, risk","https://careers.db.com/"],
+["American Express India","BFSI & Internet","Cyber security, fraud","https://www.americanexpress.com/en-us/careers/"],
+["Visa India","BFSI & Internet","Payment security, fraud","https://corporate.visa.com/en/jobs/"],
+["Mastercard India","BFSI & Internet","Payment security, cyber intelligence","https://careers.mastercard.com/"],
+["PayPal India","BFSI & Internet","AppSec, fraud, security engineering","https://careers.pypl.com/"],
+["Bajaj Finserv","BFSI & Internet","Cyber security, GRC","https://www.bajajfinserv.in/careers"],
+["Yes Bank","BFSI & Internet","Cyber security, SOC","https://www.yesbank.in/careers"],
+["IndusInd Bank","BFSI & Internet","Cyber security, risk","https://www.indusind.com/in/en/personal/careers.html"],
+["Zerodha","BFSI & Internet","AppSec, security engineering","https://zerodha.com/careers/"],
+["Groww","BFSI & Internet","AppSec, security engineering","https://groww.in/careers"],
+["Meesho","BFSI & Internet","AppSec, security engineering","https://www.meesho.io/jobs"],
+["Zoho","BFSI & Internet","Product security, AppSec","https://www.zoho.com/careers/"],
+["Freshworks","BFSI & Internet","Product security, AppSec","https://www.freshworks.com/company/careers/"],
+["Tata Communications","BFSI & Internet","Managed security, network","https://www.tatacommunications.com/careers/"],
+["ArmorCode","Cybersecurity-Focused India","ASPM, AppSec posture","https://www.armorcode.com/careers"],
+["Strobes Security","Cybersecurity-Focused India","Vulnerability management, VAPT","https://strobes.co/careers/"],
+["Entersoft Security","Cybersecurity-Focused India","AppSec, VAPT","https://www.entersoftsecurity.com/careers/"],
+["Cyberintelsys","Cybersecurity-Focused India","VAPT, managed security","https://cyberintelsys.com/careers/"],
+["Suma Soft","Cybersecurity-Focused India","MSSP, managed security","https://www.sumasoft.com/careers/"],
+["ESDS Software Solution","Cybersecurity-Focused India","Managed security, cloud SOC","https://www.esds.co.in/careers"],
+["Netrika Consulting","Cybersecurity-Focused India","Cyber forensics, investigations","https://www.netrika.com/careers/"],
+["Hicube Infosec","Cybersecurity-Focused India","VAPT, training","https://www.hicubeinfosec.com/"],
+["Indian Cyber Security Solutions","Cybersecurity-Focused India","VAPT, training, fresher hiring","https://indiancybersecuritysolutions.com/careers/"],
+["SecureKloud","Cybersecurity-Focused India","Cloud security, compliance","https://securekloud.com/careers/"],
+["Cybersecurity Works / Securin","Cybersecurity-Focused India","Vulnerability intelligence, VAPT","https://www.securin.io/careers/"],
+["Sattrix Information Security","Cybersecurity-Focused India","MSSP, SOC (Ahmedabad-based)","https://www.sattrix.com/careers/"],
+["Tsaaro Consulting","Cybersecurity-Focused India","Data privacy, DPDP, GRC","https://tsaaro.com/careers/"],
+["Scrut Automation","Cybersecurity-Focused India","GRC automation, compliance","https://www.scrut.io/careers"],
+["Sprinto","Cybersecurity-Focused India","Compliance automation (SOC 2, ISO)","https://sprinto.com/careers/"],
+["Zluri","Cybersecurity-Focused India","SaaS management & access governance","https://www.zluri.com/careers"],
+["AuthBase","Cybersecurity-Focused India","AI offensive security research","https://in.linkedin.com/company/authbase"],
+["Threatsys Technologies","Cybersecurity-Focused India","VAPT, managed security","https://threatsys.co.in/careers/"]
+];
+
+const tierOrder = ["IT Services Majors","Big 4 & Consulting","Global Product & Vendors","BFSI & Internet","Cybersecurity-Focused India"];
+
+const catBoards = {
+ "SOC":"https://in.linkedin.com/jobs/soc-analyst-jobs",
+ "VAPT":"https://in.linkedin.com/jobs/vapt-jobs",
+ "DFIR":"https://www.glassdoor.co.in/Job/digital-forensics-and-incident-response-dfir-jobs-SRCH_KO0,44.htm",
+ "Cloud Security":"https://www.foundit.in/search/cloud-security-jobs",
+ "AppSec":"https://www.foundit.in/search/application-security-jobs",
+ "IAM":"https://www.foundit.in/search/iam-jobs",
+ "GRC":"https://in.linkedin.com/jobs/governance-risk-compliance-grc-jobs",
+ "Threat":"https://www.glassdoor.com/Job/india-threat-intelligence-jobs-SRCH_IL.0,5_IN115_KO6,25.htm",
+ "Engineering":"https://in.linkedin.com/jobs/cybersecurity/india",
+ "Architecture":"https://in.linkedin.com/jobs/security-architect-jobs",
+ "Malware":"https://www.glassdoor.co.in/Job/india-malware-reverse-engineer-jobs-SRCH_IL.0,5_IN115_KO6,30.htm",
+ "Privacy":"https://in.linkedin.com/jobs/data-protection-officer-jobs"
+};
+
+function catCounts(){
+ document.querySelectorAll('.cat').forEach(cb=>{
+   const n=window.jobs.filter(j=>j.cat===cb.value).length;
+   const el=cb.parentElement.querySelector('.cnt');
+   if(el) el.textContent=n;
+ });
+}
+
+function render(){
+ const q=document.getElementById('search').value.toLowerCase();
+ const loc=document.getElementById('location').value;
+ const exp=document.getElementById('experience').value;
+ const cats=[...document.querySelectorAll('.cat:checked')].map(x=>x.value);
+ const filtered=window.jobs.filter(j=>{
+   const hay=(j.title+" "+j.company+" "+j.location+" "+j.skills.join(" ")+" "+j.cat).toLowerCase();
+   return (!q||hay.includes(q)) && (!loc||j.location.includes(loc)) && (!exp||j.exp===exp) && (!cats.length||cats.includes(j.cat));
+ });
+ const realJobs=filtered.filter(j=>j.sourceType!=='search');
+ const fallbackJobs=filtered.filter(j=>j.sourceType==='search');
+ document.getElementById('jobCount').textContent=realJobs.length;
+ document.getElementById('internCount').textContent=realJobs.filter(j=>j.intern).length;
+ const boardCountEl=document.getElementById('boardCount');
+ if(boardCountEl) boardCountEl.textContent=fallbackJobs.length;
+ document.getElementById('jobs').innerHTML=realJobs.map(j=>`
+   <article class="job${j.intern?' intern':''}">
+    <div class="jobtop"><div><h3>${esc(j.title)}</h3><div class="company">${esc(j.company)}</div></div><span class="catpill">${esc(j.intern?'Internship':j.cat)}</span></div>
+    <div class="chips">
+      <span class="chip">${esc(j.location)}</span><span class="chip">${esc(j.exp)}</span>
+      ${j.skills.map(s=>`<span class="chip">${esc(s)}</span>`).join('')}
+    </div>
+    <div class="jobfoot"><span class="src">${j.sourceType==='careers'?'careers page':j.sourceType==='newsletter'?'newsletter':j.sourceType==='api'?'api feed':'sourced posting'}</span><a href="${j.url}" target="_blank" rel="noopener">View source →</a></div>
+   </article>`).join('') || '<div class="empty">No matching jobs. Try clearing a filter or changing your search.</div>';
+ const fb=document.getElementById('fallback-boards');
+ if(fallbackJobs.length>0){
+   fb.innerHTML='<div class="section-head" style="margin-top:14px"><h2 style="font-size:13px;color:var(--dim)">Browse all openings live</h2></div>'
+     +'<div class="boardlinks">'+fallbackJobs.map(j=>`<a class="boardlinks-item" href="${j.url}" target="_blank" rel="noopener">${esc(j.title)} ↗</a>`).join('')+'</div>';
+ } else { fb.innerHTML=''; }
+
+ // category-specific "see everything live" strip
+ const strip=document.getElementById('catmore');
+ if(cats.length){
+   strip.innerHTML=cats.filter(c=>catBoards[c]).map(c=>
+     `<a href="${catBoards[c]}" target="_blank" rel="noopener">See all live ${esc(c)} openings in India ↗</a>`).join('');
+   strip.style.display='flex';
+ } else { strip.style.display='none'; strip.innerHTML=''; }
+}
+function esc(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+function resetFilters(){document.getElementById('search').value='';document.getElementById('location').value='';document.getElementById('experience').value='';document.querySelectorAll('.cat').forEach(x=>x.checked=false);render();}
+document.querySelectorAll('#search,#location,#experience,.cat').forEach(el=>el.addEventListener('input',render));
+
+fetch('data/meta.json')
+  .then(r => r.json())
+  .then(m => {
+    const el = document.getElementById('lastRefreshed');
+    if (el && m.lastRefreshed) {
+      const d = new Date(m.lastRefreshed);
+      el.textContent = d.toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
+    }
+  })
+  .catch(() => {});  // silent fail
+
+fetch('data/jobs.json')
+  .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+  .then(data=>{ window.jobs=data; catCounts(); render(); })
+  .catch(()=>{ document.getElementById('jobs').innerHTML='<div class="empty">Could not load jobs. Refresh to try again.</div>'; });
+
+function renderCompanies(filterText){
+ const f=(filterText||'').toLowerCase();
+ let html='';
+ tierOrder.forEach(t=>{
+   const rows=companies.filter(c=>c[1]===t && (!f || (c[0]+" "+c[2]).toLowerCase().includes(f)));
+   if(!rows.length) return;
+   html+=`<div class="tier"><h4>${esc(t)} — ${rows.length}</h4><div class="complist">`;
+   html+=rows.map(c=>`<a class="comprow" href="${c[3]}" target="_blank" rel="noopener"><b>${esc(c[0])}</b><span>${esc(c[2])}</span><span class="go">↗</span></a>`).join('');
+   html+=`</div></div>`;
+ });
+ document.getElementById('companies').innerHTML=html || '<div class="empty">No companies match that filter.</div>';
+}
+document.getElementById('compSearch').addEventListener('input',e=>renderCompanies(e.target.value));
+document.getElementById('companyCount').textContent=companies.length;
+renderCompanies('');
+</script>
+</body>
+</html>
