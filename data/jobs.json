@@ -884,5 +884,24 @@
     "sourceType": "newsletter",
     "intern": false,
     "fetchedAt": "2026-09-29T20:00:26.671744+00:00"
+  },
+  {
+    "id": "f73228e0f60e",
+    "title": "Software Engineer / AI Code Trainer (Python, Web, Full Stack)",
+    "company": "CodeForAI",
+    "location": "USA, UK, India, Australia, Ireland, New Zealand, Philippines, Pakistan, Singapore, Mexico",
+    "exp": "2–5 years",
+    "cat": "Engineering",
+    "skills": [
+      "api",
+      "backend",
+      "C",
+      "C#",
+      "C++"
+    ],
+    "url": "https://remotive.com/remote-jobs/software-development/software-engineer-ai-code-trainer-python-web-full-stack-2091149",
+    "sourceType": "api",
+    "intern": false,
+    "fetchedAt": "2026-10-06T13:07:02.789092+00:00"
   }
 ]
