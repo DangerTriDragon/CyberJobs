@@ -903,5 +903,24 @@
     "sourceType": "api",
     "intern": false,
     "fetchedAt": "2026-10-06T13:07:02.789092+00:00"
+  },
+  {
+    "id": "4ffd7d2b08da",
+    "title": "Software Engineer, AI Coding Tasks",
+    "company": "Askable",
+    "location": "Worldwide",
+    "exp": "2–5 years",
+    "cat": "Engineering",
+    "skills": [
+      "C++",
+      "docker",
+      "git",
+      "go",
+      "java"
+    ],
+    "url": "https://remotive.com/remote-jobs/software-development/software-engineer-ai-coding-tasks-2091158",
+    "sourceType": "api",
+    "intern": false,
+    "fetchedAt": "2026-10-19T12:43:19.298863+00:00"
   }
 ]
