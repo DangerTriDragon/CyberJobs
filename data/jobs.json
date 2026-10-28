@@ -939,5 +939,23 @@
     "sourceType": "api",
     "intern": false,
     "fetchedAt": "2026-10-24T10:39:44.687839+00:00"
+  },
+  {
+    "id": "6e735fd8c050",
+    "title": "Head of Engineering",
+    "company": "Lemon.io",
+    "location": "Worldwide",
+    "exp": "5+ years",
+    "cat": "Engineering",
+    "skills": [
+      "AI/ML",
+      "startup",
+      "marketplace",
+      "fundraising"
+    ],
+    "url": "https://remotive.com/remote-jobs/software-development/head-of-engineering-2091134",
+    "sourceType": "api",
+    "intern": false,
+    "fetchedAt": "2026-10-28T12:29:22.274603+00:00"
   }
 ]
