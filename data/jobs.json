@@ -957,5 +957,24 @@
     "sourceType": "api",
     "intern": false,
     "fetchedAt": "2026-10-28T12:29:22.274603+00:00"
+  },
+  {
+    "id": "3543f564505a",
+    "title": "Full-Stack Developer",
+    "company": "Fluence International, Inc.",
+    "location": "Worldwide",
+    "exp": "2–5 years",
+    "cat": "Engineering",
+    "skills": [
+      "admin",
+      "api",
+      "AWS",
+      "backend",
+      "cloud"
+    ],
+    "url": "https://remotive.com/remote-jobs/software-development/full-stack-developer-2091165",
+    "sourceType": "api",
+    "intern": false,
+    "fetchedAt": "2026-10-31T11:58:30.960415+00:00"
   }
 ]
